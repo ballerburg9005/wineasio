@@ -20,8 +20,13 @@ DLLS   = $(wineasio_dll_MODULE) $(wineasio_dll_MODULE).so
 ### Tools
 
 CC        = gcc
+ifeq ($(PREFIX),/usr)
 WINEBUILD = winebuild
 WINECC    = winegcc
+else
+WINEBUILD = $(PREFIX)/bin/winebuild
+WINECC    = $(PREFIX)/bin/winegcc
+endif
 
 ### Common settings
 
@@ -63,10 +68,10 @@ ifneq ($(WINEBUILD_LIBDIR),)
 wineasio_dll_LDFLAGS += -L$(WINEBUILD_LIBDIR)
 else
 wineasio_dll_LDFLAGS += \
-			-L/usr/lib$(M)/wine \
-			-L/usr/lib/wine \
-			-L/usr/lib/$(ARCH)-linux-gnu/wine \
-			-L/usr/lib/$(ARCH)-linux-gnu/wine-development \
+			-L$(PREFIX)/lib$(M)/wine \
+			-L$(PREFIX)/lib/wine \
+			-L$(PREFIX)/lib/$(ARCH)-linux-gnu/wine \
+			-L$(PREFIX)/lib/$(ARCH)-linux-gnu/wine-development \
 			-L/opt/wine-stable/lib \
 			-L/opt/wine-stable/lib/wine \
 			-L/opt/wine-stable/lib$(M) \
